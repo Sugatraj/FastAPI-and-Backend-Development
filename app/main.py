@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from typing import Any
-import random
 
 app = FastAPI()
 
@@ -37,12 +36,16 @@ shipments = {
     }
 }
 
+@app.get("/")
+def welcome():
+    return {"message" : "Welcome to FastAPI world"}
+
 @app.get("/latest")
 def latest() -> dict[str, Any]:
     id = max(shipments.keys())
     return shipments[id]
 
-@app.get("/shipment/{id}")
+@app.get("/shipments/")
 def shipmentData(id : int) -> dict[str, Any | list[str]]:
     if id not in shipments:
         return {"error" : f"Shipment for id : {id} not found"}
