@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from time import sleep
+from fastapi import FastAPI, HTTPException, status
 from typing import Any
 from datetime import datetime
 
@@ -50,5 +51,9 @@ def latest() -> dict[str, Any]:
 @app.get("/shipments/")
 def shipmentData(id : int) -> dict[str, Any | list[str]]:
     if id not in shipments:
-        return {"error" : f"Shipment for id : {id} not found"}
+        
+        raise HTTPException(
+             status_code=status.HTTP_404_NOT_FOUND,
+             detail=f"Shipment for id : {id} not found"
+        )
     return shipments[id]
