@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from typing import Any
+from datetime import datetime
 
 app = FastAPI()
 
@@ -38,7 +39,8 @@ shipments = {
 
 @app.get("/")
 def welcome():
-    return {"message" : "Welcome to FastAPI world"}
+    return {"message" : "Welcome to FastAPI world",
+    "timestamp" : f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"}
 
 @app.get("/latest")
 def latest() -> dict[str, Any]:
